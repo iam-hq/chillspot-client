@@ -5,10 +5,12 @@ import {
   InputBase,
   Typography,
   Select,
+  Menu,
   MenuItem,
   FormControl,
   useTheme,
   useMediaQuery,
+  Divider,
 } from "@mui/material";
 import {
   Search,
@@ -17,13 +19,15 @@ import {
   LightMode,
   Notifications,
   Help,
-  Menu,
+  Menu as MenuIcon,
   Close,
 } from "@mui/icons-material";
+import { usePopupState, bindTrigger, bindMenu } from "material-ui-popup-state/hooks";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
+import MenuItemContent from "components/MenuItemContent";
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -40,6 +44,16 @@ const Navbar = () => {
   const alt = theme.palette.background.alt;
 
   const fullName = `${user.firstName} ${user.lastName}`;
+
+  const messagePopupState = usePopupState({
+    variant: "popover",
+    popupId: "messagesMenu"
+  });
+
+  const notificationPopupState = usePopupState({
+    variant: "popover",
+    popupId: "notificationMenu"
+  });
 
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -83,8 +97,27 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
+
+          <IconButton variant="contained" onClick={() => navigate("/messages")}>
+            <Message sx={{ fontSize: "25px" }} />
+          </IconButton>
+
+          <IconButton variant="contained" {...bindTrigger(notificationPopupState)}>
+            <Notifications sx={{ fontSize: "25px" }} />
+          </IconButton>
+          <Menu {...bindMenu(notificationPopupState)}>
+            <MenuItemContent 
+              popupState={notificationPopupState} 
+              title="John Doe" 
+              subtitle="Hello my friend, I hope you're doing fine cuz I'm doing great. How was your day?."
+              time="12/12/22 15:30" 
+            />
+            <Divider />
+            <MenuItem onClick={() => {navigate("/messages"); messagePopupState.close();}} >
+              <Typography sx={{ textAlign: "center" }}>More Messages...</Typography>
+            </MenuItem>
+          </Menu>
+
           <Help sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}>
             <Select
@@ -115,7 +148,7 @@ const Navbar = () => {
         <IconButton
           onClick={() => setIsMobileMenuToggled(!isMobileMenuToggled)}
         >
-          <Menu />
+          <MenuIcon />
         </IconButton>
       )}
 
