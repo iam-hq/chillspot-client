@@ -2,11 +2,11 @@ import { Box, InputBase, IconButton, Typography, useMediaQuery, useTheme } from 
 import { Search, Settings, SendRounded } from "@mui/icons-material";
 import FlexBetween from "components/FlexBetween";
 import { useState } from "react";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import IncomingMessage from "components/IncomingMessage";
 import OutgoingMessage from "components/OutgoingMessage";
 
-const socket = io.connect("https://thechillspot-api.onrender.com");
+// const socket = io.connect("https://thechillspot-api.onrender.com");
 
 const Messages = () => {
     const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
@@ -19,7 +19,7 @@ const Messages = () => {
     }
 
     const joinRoom = () => {
-        socket.emit("join_chat", {userId: "isadfnakfafkl"});
+        // socket.emit("join_chat", {userId: "isadfnakfafkl"});
     }
 
     return <>
