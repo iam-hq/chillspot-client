@@ -35,7 +35,7 @@ function App() {
                 textAlign="center"
               >
                 <Typography fontWeight="bold" fontSize="32px" color="primary">
-                  Sociopedia
+                  The ChillSpot
                 </Typography>
               </Box>
             ) : (

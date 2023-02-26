@@ -70,7 +70,7 @@ const Navbar = () => {
             },
           }}
         >
-          Sociopedia
+          The ChillSpot
         </Typography>
         {isNonMobileScreens && (
           <FlexBetween
